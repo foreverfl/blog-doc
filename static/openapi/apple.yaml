@@ -1,0 +1,126 @@
+# Apple resource — referenced from openapi.yaml via $ref.
+# Not a standalone OpenAPI document: `collection` and `item` are Path Item
+# Objects pulled into the root spec's `paths`.
+
+collection:
+  get:
+    tags: [apple]
+    operationId: listApples
+    summary: List apples
+    parameters:
+      - name: limit
+        in: query
+        description: Max items to return
+        required: false
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 20
+    responses:
+      '200':
+        description: A page of apples
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Apple'
+  post:
+    tags: [apple]
+    operationId: createApple
+    summary: Create an apple
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AppleInput'
+    responses:
+      '201':
+        description: Created
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Apple'
+      '400':
+        description: Invalid input
+
+item:
+  parameters:
+    - name: id
+      in: path
+      required: true
+      description: Apple id
+      schema:
+        type: string
+  get:
+    tags: [apple]
+    operationId: getApple
+    summary: Get an apple
+    responses:
+      '200':
+        description: The apple
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Apple'
+      '404':
+        description: Not found
+  put:
+    tags: [apple]
+    operationId: updateApple
+    summary: Update an apple
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AppleInput'
+    responses:
+      '200':
+        description: Updated
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Apple'
+      '404':
+        description: Not found
+  delete:
+    tags: [apple]
+    operationId: deleteApple
+    summary: Delete an apple
+    responses:
+      '204':
+        description: Deleted
+      '404':
+        description: Not found
+
+components:
+  schemas:
+    AppleInput:
+      type: object
+      required: [variety, color]
+      properties:
+        variety:
+          type: string
+          example: Fuji
+        color:
+          type: string
+          example: red
+        weightGrams:
+          type: number
+          example: 180
+    Apple:
+      allOf:
+        - $ref: '#/components/schemas/AppleInput'
+        - type: object
+          required: [id, createdAt]
+          properties:
+            id:
+              type: string
+              example: apl_01
+            createdAt:
+              type: string
+              format: date-time
+              example: '2026-06-20T00:00:00Z'
