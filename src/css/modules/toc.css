@@ -46,9 +46,22 @@ ul.table-of-contents {
   @apply list-none m-0 p-0 space-y-2;
 }
 
-/* Nested TOC Lists */
-.table-of-contents__list .table-of-contents__list {
+/* Nested TOC Lists.
+   Docusaurus renders nested levels as bare <ul> (no `__list` class), and
+   Tailwind preflight zeroes <ul> padding, so target every <ul> descendant of
+   the TOC root to restore per-level indentation. */
+.table-of-contents ul {
   @apply ml-3 mt-2 space-y-1;
+}
+
+/* Dim and shrink deeper links (h3+) for visual hierarchy, since Docusaurus
+   does not emit the `--level-N` classes the level rules below would need. */
+.table-of-contents ul .table-of-contents__link {
+  @apply text-xs text-gray-500;
+}
+
+[data-theme='dark'] .table-of-contents ul .table-of-contents__link {
+  @apply text-gray-500;
 }
 
 /* ==========================================================================

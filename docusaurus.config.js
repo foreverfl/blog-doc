@@ -184,6 +184,11 @@ const config = {
           autoCollapseCategories: false,
         },
       },
+      // Right-hand table of contents: show h2–h4 headings.
+      tableOfContents: {
+        minHeadingLevel: 2,
+        maxHeadingLevel: 4,
+      },
     }),
 };
 
