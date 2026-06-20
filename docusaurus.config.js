@@ -65,7 +65,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
-          routeBasePath: '/docs',
+          routeBasePath: '/',
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl: 'https://github.com/foreverfl/blog-doc/tree/main/',
         },
@@ -86,7 +86,7 @@ const config = {
         indexDocs: true,
         indexBlog: false,
         indexPages: false,
-        docsRouteBasePath: "/docs",
+        docsRouteBasePath: "/",
         highlightSearchTermsOnTargetPage: true,
         explicitSearchResultPath: true,
         searchResultLimits: 8,
@@ -143,7 +143,7 @@ const config = {
             items: [
               {
                 label: 'Introduction',
-                to: '/docs/docs/intro',
+                to: '/docs/intro',
               },
             ],
           },

@@ -19,12 +19,12 @@ function HomepageHeader(): React.ReactElement {
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
             <Link
               className="inline-flex items-center px-8 py-3 text-lg font-semibold text-white bg-green-600 hover:bg-green-700 rounded-full transition-colors duration-200 shadow-lg hover:shadow-xl"
-              to="/docs/docs/intro">
+              to="/docs/intro">
               Get Started
             </Link>
             <Link
               className="inline-flex items-center px-8 py-3 text-lg font-semibold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-full transition-colors duration-200"
-              to="/docs/docs/intro">
+              to="/docs/intro">
               View Documentation →
             </Link>
           </div>
