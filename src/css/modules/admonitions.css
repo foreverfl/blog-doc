@@ -1,0 +1,63 @@
+/**
+ * Admonitions (note / tip / info / warning / danger)
+ * ==================================================
+ * Docusaurus + Infima ship base admonition styles, but the custom Tailwind
+ * layer strips the padding, left accent, and tint, leaving the icon and text
+ * jammed into the corner. Define them explicitly here.
+ */
+
+/* Base box: padding, rounded corners, left accent border, spacing. */
+.theme-admonition {
+  @apply my-6 px-4 py-3 rounded-lg border-l-4 bg-gray-50 border-gray-300 text-gray-700;
+}
+
+[data-theme='dark'] .theme-admonition {
+  @apply bg-gray-800/50 border-gray-600 text-gray-300;
+}
+
+/* Heading row: icon + label, separated from the body below. */
+.theme-admonition [class*="admonitionHeading"] {
+  @apply flex items-center gap-2 mb-2 text-sm font-semibold uppercase tracking-wide;
+}
+
+.theme-admonition [class*="admonitionIcon"] {
+  @apply inline-flex;
+}
+
+.theme-admonition [class*="admonitionIcon"] svg {
+  @apply w-4 h-4 fill-current;
+}
+
+/* Drop the trailing margin so the box is not bottom-heavy. */
+.theme-admonition [class*="admonitionContent"] > :last-child {
+  @apply mb-0;
+}
+
+/* Per-type accent colors (note keeps the neutral default above). */
+.theme-admonition-tip {
+  @apply bg-green-50 border-green-500 text-green-900;
+}
+[data-theme='dark'] .theme-admonition-tip {
+  @apply bg-green-900/20 border-green-500 text-green-100;
+}
+
+.theme-admonition-info {
+  @apply bg-blue-50 border-blue-500 text-blue-900;
+}
+[data-theme='dark'] .theme-admonition-info {
+  @apply bg-blue-900/20 border-blue-500 text-blue-100;
+}
+
+.theme-admonition-warning {
+  @apply bg-amber-50 border-amber-500 text-amber-900;
+}
+[data-theme='dark'] .theme-admonition-warning {
+  @apply bg-amber-900/20 border-amber-500 text-amber-100;
+}
+
+.theme-admonition-danger {
+  @apply bg-red-50 border-red-500 text-red-900;
+}
+[data-theme='dark'] .theme-admonition-danger {
+  @apply bg-red-900/20 border-red-500 text-red-100;
+}

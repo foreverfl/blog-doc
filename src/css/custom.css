@@ -36,6 +36,7 @@
 @import "./modules/toc.css";
 @import "./modules/docs.css";
 @import "./modules/components.css";
+@import "./modules/admonitions.css";
 @import "./modules/typography.css";
 @import "./modules/code.css";
 @import "./modules/utilities.css";
