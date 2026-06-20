@@ -114,6 +114,12 @@ const config = {
             label: 'Docs',
           },
           {
+            type: 'docSidebar',
+            sidebarId: 'apiSidebar',
+            position: 'left',
+            label: 'API',
+          },
+          {
             type: 'localeDropdown',
             position: 'right',
           },
@@ -137,7 +143,7 @@ const config = {
             items: [
               {
                 label: 'Introduction',
-                to: '/docs/intro',
+                to: '/docs/docs/intro',
               },
             ],
           },
