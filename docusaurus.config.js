@@ -31,22 +31,22 @@ const config = {
 
   // i18n configuration for multi-language support
   i18n: {
-    defaultLocale: 'ko',
-    locales: ['ko', 'en', 'ja'],
+    defaultLocale: 'en',
+    locales: ['en', 'ko', 'ja'],
     localeConfigs: {
-      ko: {
-        label: '한국어',
-        direction: 'ltr',
-        htmlLang: 'ko-KR',
-        calendar: 'gregory',
-        path: 'ko',
-      },
       en: {
         label: 'English',
         direction: 'ltr',
         htmlLang: 'en-US',
         calendar: 'gregory',
         path: 'en',
+      },
+      ko: {
+        label: '한국어',
+        direction: 'ltr',
+        htmlLang: 'ko-KR',
+        calendar: 'gregory',
+        path: 'ko',
       },
       ja: {
         label: '日本語',

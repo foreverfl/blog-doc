@@ -4,9 +4,10 @@ sidebar_position: 1
 
 # mogumogu Docs
 
-**mogumogu 블로그**의 기술 문서입니다 — 백엔드 서비스(Rust / Go / Haskell)의
-아키텍처·API·운영 내용을 다룹니다.
+Technical documentation for the **mogumogu blog** — architecture, API, and operations
+of the backend services (Rust / Go / Haskell).
 
-이 사이트는 [`blog-doc`](https://github.com/foreverfl/blog-doc) 레포에서 생성되어
-`docs.mogumogu.dev`로 배포됩니다. **Architecture**, **API**, **Operations** 문서는
-[`blog-v2`](https://github.com/foreverfl/blog-v2) 백엔드와 자동으로 동기화됩니다.
+This site is generated from the [`blog-doc`](https://github.com/foreverfl/blog-doc)
+repository and deployed to `docs.mogumogu.dev`. Pages under **Architecture**, **API**,
+and **Operations** are kept in sync with the [`blog-v2`](https://github.com/foreverfl/blog-v2)
+backend automatically.
