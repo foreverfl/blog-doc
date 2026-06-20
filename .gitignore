@@ -27,3 +27,6 @@ pnpm-debug.log*
 
 # vscode
 .vscode/
+
+# Playwright MCP browser artifacts (screenshots, snapshots, console logs)
+/.playwright-mcp/
