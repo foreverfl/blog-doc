@@ -20,38 +20,63 @@
    CODE BLOCKS
    ========================================================================== */
 
-/* Base code block styles */
-pre {
-  @apply rounded-xl border border-gray-200;
+/* Code block container: round and clip so the title bar and the <pre> share one
+   outline. Prism's theme owns the background and token colors. */
+div[class*="codeBlockContainer"] {
+  @apply relative rounded-xl overflow-hidden border border-gray-200 mb-6;
 }
 
-[data-theme='dark'] pre {
+[data-theme='dark'] div[class*="codeBlockContainer"] {
   @apply border-gray-700;
 }
 
-/* Markdown code blocks */
+/* Title bar (from ```lang title="file") — separate it from the code below. */
+div[class*="codeBlockTitle"] {
+  @apply px-4 py-2 text-sm font-medium text-gray-600 border-b border-gray-200;
+}
+
+[data-theme='dark'] div[class*="codeBlockTitle"] {
+  @apply text-gray-300 border-gray-700;
+}
+
+/* The <pre> keeps Prism's background; just pad and scroll it, no own rounding. */
 .markdown pre {
-  @apply bg-gray-900 text-gray-100 p-4 rounded-lg overflow-x-auto mb-6;
+  @apply p-4 m-0 overflow-x-auto;
 }
 
-[data-theme='dark'] .markdown pre {
-  @apply bg-gray-800;
-}
-
-/* Code inside pre blocks */
 .markdown pre code {
-  @apply text-gray-100 bg-transparent p-0;
+  @apply bg-transparent p-0;
 }
 
 /* ==========================================================================
    CODE BLOCK ACTIONS (Copy button, Language label)
    ========================================================================== */
 
-/* Code block container - ensure proper stacking */
-div[class*="codeBlockContainer"],
-div[class*="theme-code-block"] {
-  @apply relative;
+/* Language badge: Docusaurus shows none by default, so derive it from the
+   `language-*` class on the container and pin it top-right, left of the copy
+   button. Only listed languages render (no `content` → no pseudo-element). */
+div[class*="codeBlockContainer"]::after {
+  @apply absolute text-xs lowercase tracking-wider text-gray-400 pointer-events-none;
+  top: 0.6rem;
+  right: 3.25rem;
 }
+
+div[class*="codeBlockContainer"].language-js::after { content: "js"; }
+div[class*="codeBlockContainer"].language-ts::after { content: "ts"; }
+div[class*="codeBlockContainer"].language-bash::after { content: "bash"; }
+div[class*="codeBlockContainer"].language-json::after { content: "json"; }
+div[class*="codeBlockContainer"].language-rust::after { content: "rust"; }
+div[class*="codeBlockContainer"].language-go::after { content: "go"; }
+div[class*="codeBlockContainer"].language-haskell::after { content: "haskell"; }
+div[class*="codeBlockContainer"].language-swift::after { content: "swift"; }
+div[class*="codeBlockContainer"].language-php::after { content: "php"; }
+div[class*="codeBlockContainer"].language-python::after { content: "python"; }
+div[class*="codeBlockContainer"].language-java::after { content: "java"; }
+div[class*="codeBlockContainer"].language-kotlin::after { content: "kotlin"; }
+div[class*="codeBlockContainer"].language-sql::after { content: "sql"; }
+div[class*="codeBlockContainer"].language-yaml::after { content: "yaml"; }
+div[class*="codeBlockContainer"].language-toml::after { content: "toml"; }
+div[class*="codeBlockContainer"].language-graphql::after { content: "graphql"; }
 
 /* Button group - language label and copy button */
 div[class*="buttonGroup"] {
