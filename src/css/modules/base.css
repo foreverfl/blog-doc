@@ -4,9 +4,15 @@
  * Global resets, base elements, and fundamental styles
  */
 
-/* Global transitions for smooth theme switching */
-* {
-  @apply transition-colors duration-200 ease-in-out;
+/* No global `*` color transition: animating every element on a theme toggle
+   stuttered. Components keep their own hover transitions instead. */
+
+/* Suppress all transitions during a theme toggle (set by
+   disable-theme-transition.js) so the switch is instant and doesn't flicker. */
+html.theme-switching *,
+html.theme-switching *::before,
+html.theme-switching *::after {
+  transition: none !important;
 }
 
 /* Focus styles for accessibility */

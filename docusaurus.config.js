@@ -64,6 +64,7 @@ const config = {
   // Add client modules for global styles
   clientModules: [
     require.resolve('./src/css/custom.css'),
+    require.resolve('./src/js/disable-theme-transition.js'),
   ],
 
   presets: [
