@@ -1,0 +1,33 @@
+# Docs 사이드바 매핑 — source of truth for the Docs area sidebar.
+#
+# This file is the CONTRACT between the two CI/CD stages:
+#   1. mapping: read the blog sidebar, (re)generate this file
+#   2. fill:    for each page, visit `url`, generate en/ko/ja docs from the
+#               frontmatter schema + _template.md, then flip `status`
+#
+# The menus below are PLACEHOLDER examples that only show the shape. Stage 1
+# replaces them with the blog's real sidebar (menu names, order, page URLs).
+# See docs/_authoring.md for the full schema and authoring rules.
+
+menus: # sidebar top-level menus = categories, in order
+  - slug: posts # /docs/posts, category dir name
+    label: { en: Posts, ko: 게시글, ja: 記事 }
+    position: 1
+    pages: # pages inside the menu = documents (depth 2)
+      - slug: list
+        label: { en: Post list, ko: 게시글 목록, ja: 記事一覧 }
+        url: / # real blog path the fill stage visits
+        status: pending # pending | generated | manual
+      - slug: detail
+        label: { en: Post detail, ko: 게시글 상세, ja: 記事詳細 }
+        url: /posts/:slug
+        status: pending
+
+  - slug: about
+    label: { en: About, ko: 소개, ja: 紹介 }
+    position: 2
+    pages:
+      - slug: index
+        label: { en: About page, ko: 소개 페이지, ja: 紹介ページ }
+        url: /about
+        status: pending
