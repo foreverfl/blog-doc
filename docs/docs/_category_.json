@@ -1,8 +1,4 @@
 {
   "label": "Docs",
-  "position": 1,
-  "link": {
-    "type": "generated-index",
-    "description": "Concept and guide documentation for the mogumogu blog."
-  }
+  "position": 1
 }
