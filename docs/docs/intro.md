@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# mogumogu Docs
+# mogumogu
 
 Technical documentation for the **mogumogu blog** — architecture, API, and operations
 of the backend services (Rust / Go / Haskell).

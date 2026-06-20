@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# mogumogu Docs
+# mogumogu
 
 **mogumogu ブログ**の技術ドキュメントです — バックエンドサービス(Rust / Go / Haskell)の
 アーキテクチャ・API・運用について扱います。

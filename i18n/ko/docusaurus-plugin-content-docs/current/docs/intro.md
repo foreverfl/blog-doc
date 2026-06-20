@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# mogumogu Docs
+# mogumogu
 
 **mogumogu 블로그**의 기술 문서입니다 — 백엔드 서비스(Rust / Go / Haskell)의
 아키텍처·API·운영 내용을 다룹니다.

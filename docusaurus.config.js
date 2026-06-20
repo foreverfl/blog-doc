@@ -9,7 +9,7 @@ copyScalarBundle();
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'mogumogu Docs',
+  title: 'mogumogu',
   tagline: 'Architecture, API & operations for the mogumogu blog',
   favicon: 'img/favicon.ico',
 
@@ -103,12 +103,12 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-      image: 'img/docusaurus-social-card.jpg',
+      image: 'img/logo.png',
       navbar: {
-        title: 'mogumogu Docs',
+        title: 'mogumogu',
         logo: {
-          alt: 'mogumogu Docs Logo',
-          src: 'img/docusaurus-logo.svg',
+          alt: 'mogumogu Logo',
+          src: 'img/logo.png',
         },
         items: [
           {
