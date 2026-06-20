@@ -177,6 +177,20 @@ const config = {
       prism: {
         theme: themes.github,
         darkTheme: themes.dracula,
+        additionalLanguages: [
+          'rust',
+          'go',
+          'haskell',
+          'swift',
+          'php',
+          'python',
+          'java',
+          'kotlin',
+          'sql',
+          'yaml',
+          'toml',
+          'graphql',
+        ],
       },
       docs: {
         sidebar: {

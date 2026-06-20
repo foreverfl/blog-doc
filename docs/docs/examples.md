@@ -72,6 +72,85 @@ greet('mogumogu');
 docker compose up -d --build
 ```
 
+## Syntax highlighting
+
+One block per language to check Prism highlighting across the stack.
+
+```rust
+fn main() {
+    println!("Hello, mogumogu!");
+}
+```
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Hello, mogumogu!")
+}
+```
+
+```haskell
+main :: IO ()
+main = putStrLn "Hello, mogumogu!"
+```
+
+```swift
+let name = "mogumogu"
+print("Hello, \(name)!")
+```
+
+```php
+<?php
+echo "Hello, mogumogu!";
+```
+
+```python
+def greet(name: str) -> str:
+    return f"Hello, {name}!"
+```
+
+```java
+class Main {
+    public static void main(String[] args) {
+        System.out.println("Hello, mogumogu!");
+    }
+}
+```
+
+```kotlin
+fun main() {
+    println("Hello, mogumogu!")
+}
+```
+
+```sql
+SELECT id, variety FROM apple WHERE color = 'red' ORDER BY id;
+```
+
+```yaml
+service: rust-api
+port: 8080
+replicas: 2
+```
+
+```toml
+[server]
+host = "0.0.0.0"
+port = 8080
+```
+
+```graphql
+query Apples {
+  apples(limit: 10) {
+    id
+    variety
+  }
+}
+```
+
 ## Table
 
 | Method | Path | Description |
