@@ -32,8 +32,8 @@ function HomepageHeader(): React.ReactElement {
       </div>
       {/* Background decoration */}
       <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-gradient-to-br from-green-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 opacity-50"></div>
-        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-gradient-to-r from-green-100 to-blue-100 dark:from-green-900 dark:to-blue-900 rounded-full blur-3xl opacity-20"></div>
+        <div className="absolute inset-0 bg-linear-to-br from-green-50 via-white to-blue-50 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800 opacity-50"></div>
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-linear-to-r from-green-100 to-blue-100 dark:from-green-900 dark:to-blue-900 rounded-full blur-3xl opacity-20"></div>
       </div>
     </header>
   );

@@ -62,7 +62,7 @@ function Feature({ icon, title, description }: FeatureProps): React.ReactElement
     <div className="group relative">
       <div className="relative h-full bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100 dark:border-gray-700">
         <div className="flex flex-col items-center text-center space-y-4">
-          <div className="flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-green-100 to-blue-100 dark:from-green-900/30 dark:to-blue-900/30 text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform duration-300">
+          <div className="flex items-center justify-center w-20 h-20 rounded-2xl bg-linear-to-br from-green-100 to-blue-100 dark:from-green-900/30 dark:to-blue-900/30 text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform duration-300">
             {icon}
           </div>
           <h3 className="text-xl font-bold text-gray-900 dark:text-white">
