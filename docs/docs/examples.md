@@ -55,7 +55,7 @@ H<sub>2</sub>O and E = mc<sup>2</sup>.
 >
 > > And a nested blockquote inside it.
 
-## Code
+## Code {#code}
 
 Inline `const x = 1` and a fenced block with a title:
 
