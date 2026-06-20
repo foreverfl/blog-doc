@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>API Reference — mogumogu</title>
+    <link rel="icon" href="/img/favicon.ico" />
+    <style>
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script src="/api/scalar.js"></script>
+    <script>
+      Scalar.createApiReference('#app', {
+        url: '/openapi/openapi.yaml',
+      });
+    </script>
+  </body>
+</html>

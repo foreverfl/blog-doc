@@ -10,6 +10,9 @@
 .docusaurus
 .cache-loader
 
+# Scalar bundle copied from node_modules at build time (see scripts/copy-scalar.js)
+/static/api/scalar.js
+
 # Misc
 .DS_Store
 .env.local

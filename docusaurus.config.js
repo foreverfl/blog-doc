@@ -2,6 +2,10 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 
 const {themes} = require('prism-react-renderer');
+const copyScalarBundle = require('./scripts/copy-scalar');
+
+// Vendor the Scalar standalone bundle into static/ so /api serves it locally.
+copyScalarBundle();
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -114,8 +118,7 @@ const config = {
             label: 'Docs',
           },
           {
-            type: 'docSidebar',
-            sidebarId: 'apiSidebar',
+            to: 'pathname:///api/',
             position: 'left',
             label: 'API',
           },
