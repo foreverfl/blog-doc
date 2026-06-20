@@ -151,6 +151,13 @@ query Apples {
 }
 ```
 
+```diff
+ fn main() {
+-    println!("Hello, world!");
++    println!("Hello, mogumogu!");
+ }
+```
+
 ## 表
 
 | Method | Path | 説明 |

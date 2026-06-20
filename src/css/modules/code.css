@@ -30,9 +30,11 @@ div[class*="codeBlockContainer"] {
   @apply border-gray-700;
 }
 
-/* Title bar (from ```lang title="file") — separate it from the code below. */
+/* Title bar (from ```lang title="file"). Share the code's background so the
+   block reads as one surface, separated only by a thin divider. */
 div[class*="codeBlockTitle"] {
   @apply px-4 py-2 text-sm font-medium text-gray-600 border-b border-gray-200;
+  background-color: var(--prism-background-color);
 }
 
 [data-theme='dark'] div[class*="codeBlockTitle"] {
@@ -44,8 +46,34 @@ div[class*="codeBlockTitle"] {
   @apply p-4 m-0 overflow-x-auto;
 }
 
+/* Untitled blocks have no title bar to hold the badge and copy button, so
+   reserve a top strip on the code instead of letting them overlap line 1. */
+div[class*="codeBlockContainer"]:not(:has([class*="codeBlockTitle"])) pre {
+  padding-top: 2.75rem;
+}
+
 .markdown pre code {
   @apply bg-transparent p-0;
+}
+
+/* Prism token type names collide with Tailwind utilities — e.g. TOML's `table`
+   token matches `.table { display: table }` and breaks `[server]` onto its own
+   line. Force every code token back to inline (tokens are always inline text). */
+.prism-code .token {
+  display: inline !important;
+}
+
+/* Anchor the copy button to the container's top-right so it lines up with the
+   language badge — in the title bar when there is one, over the code otherwise. */
+div[class*="codeBlockContent"] {
+  position: static;
+}
+
+div[class*="buttonGroup"] {
+  position: absolute;
+  top: 0.4rem;
+  right: 0.5rem;
+  z-index: 1;
 }
 
 /* ==========================================================================
@@ -53,16 +81,24 @@ div[class*="codeBlockTitle"] {
    ========================================================================== */
 
 /* Language badge: Docusaurus shows none by default, so derive it from the
-   `language-*` class on the container and pin it top-right, left of the copy
-   button. Only listed languages render (no `content` → no pseudo-element). */
+   `language-*` class on the container. Pin it top-LEFT so it never collides with
+   the copy / word-wrap buttons on the right. Only listed languages render (no
+   `content` → no pseudo-element). */
 div[class*="codeBlockContainer"]::after {
   @apply absolute text-xs lowercase tracking-wider text-gray-400 pointer-events-none;
   top: 0.6rem;
-  right: 3.25rem;
+  left: 1rem;
+}
+
+/* Titled blocks already show the filename on the left, so drop the badge there
+   to avoid overlapping it. */
+div[class*="codeBlockContainer"]:has([class*="codeBlockTitle"])::after {
+  content: none !important;
 }
 
 div[class*="codeBlockContainer"].language-js::after { content: "js"; }
 div[class*="codeBlockContainer"].language-ts::after { content: "ts"; }
+div[class*="codeBlockContainer"].language-diff::after { content: "diff"; }
 div[class*="codeBlockContainer"].language-bash::after { content: "bash"; }
 div[class*="codeBlockContainer"].language-json::after { content: "json"; }
 div[class*="codeBlockContainer"].language-rust::after { content: "rust"; }

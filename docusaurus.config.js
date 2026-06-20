@@ -177,8 +177,15 @@ const config = {
       },
       prism: {
         theme: themes.github,
-        darkTheme: themes.dracula,
+        darkTheme: {
+          ...themes.dracula,
+          plain: {
+            ...themes.dracula.plain,
+            backgroundColor: '#1e293b',
+          },
+        },
         additionalLanguages: [
+          'diff',
           'rust',
           'go',
           'haskell',
