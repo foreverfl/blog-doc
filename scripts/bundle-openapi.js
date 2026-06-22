@@ -89,5 +89,6 @@ module.exports = function bundleOpenapi() {
     }
   }
 
+  fs.mkdirSync(path.dirname(outFile), {recursive: true});
   fs.writeFileSync(outFile, JSON.stringify(bundle, null, 2));
 };
