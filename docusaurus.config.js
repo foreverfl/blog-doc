@@ -5,9 +5,7 @@ const {themes} = require('prism-react-renderer');
 const copyScalarBundle = require('./scripts/copy-scalar');
 const bundleOpenapi = require('./scripts/bundle-openapi');
 
-// Vendor the Scalar standalone bundle into static/ so /api serves it locally.
 copyScalarBundle();
-// Inline the split OpenAPI sources into one document Scalar can load.
 bundleOpenapi();
 
 /** @type {import('@docusaurus/types').Config} */

@@ -1,58 +1,81 @@
-// Bundle the split OpenAPI sources into a single self-contained document.
+// Merge the blog-v2 OpenAPI domain specs into one Scalar-loadable document.
 //
-// The spec is authored across static/openapi/{openapi,apple,banana}.yaml, where
-// the root file pulls each resource in via `$ref: './apple.yaml#/collection'`.
-// Scalar's standalone bundle does NOT fetch external $ref files in the browser,
-// so we inline them at build time into one JSON document that Scalar can load.
-// Invoked from docusaurus.config.js, which every docusaurus command evaluates.
+// CI fetches the specs (one standalone OpenAPI doc per backend domain) from
+// blog-v2 and points OPENAPI_SPECS_SRC at them. Their paths and components are
+// merged into a single self-contained static/openapi/openapi.bundle.json,
+// since Scalar's browser bundle can't follow external $refs. Invoked from
+// docusaurus.config.js.
 const fs = require('fs');
 const path = require('path');
 const yaml = require('js-yaml');
 
-const openapiDir = path.join(__dirname, '..', 'static/openapi');
-const rootFile = path.join(openapiDir, 'openapi.yaml');
-const outFile = path.join(openapiDir, 'openapi.bundle.json');
-
-// Resolve `#/a/b/c` against an already-parsed document.
-function resolvePointer(doc, pointer) {
-  return pointer
-    .replace(/^#\//, '')
-    .split('/')
-    .reduce((node, key) => node[key], doc);
-}
+// CI sets OPENAPI_SPECS_SRC; the sibling path is a local-dev fallback.
+const defaultSrc = path.join(
+  __dirname,
+  '..',
+  '..',
+  'blog-v2/doc-source/openapi/specs',
+);
+const specsDir = process.env.OPENAPI_SPECS_SRC || defaultSrc;
+const outFile = path.join(__dirname, '..', 'static/openapi/openapi.bundle.json');
 
 module.exports = function bundleOpenapi() {
-  if (!fs.existsSync(rootFile)) {
+  if (!fs.existsSync(specsDir)) {
+    // Source specs not present (e.g. blog-v2 not checked out as a sibling).
+    // Leave any previously generated bundle in place.
     return;
   }
-  const root = yaml.load(fs.readFileSync(rootFile, 'utf8'));
-  const cache = {};
-  const loadResource = (file) => {
-    if (!cache[file]) {
-      cache[file] = yaml.load(fs.readFileSync(path.join(openapiDir, file), 'utf8'));
-    }
-    return cache[file];
-  };
+  const files = fs
+    .readdirSync(specsDir)
+    .filter((file) => file.endsWith('.yaml') || file.endsWith('.yml'))
+    .sort();
+  if (files.length === 0) {
+    return;
+  }
 
-  // Inline each external path-item ref and collect the resource files used.
-  for (const [route, value] of Object.entries(root.paths || {})) {
-    const ref = value && value.$ref;
-    const match = typeof ref === 'string' && ref.match(/^\.\/(.+?)(#\/.+)$/);
-    if (!match) {
+  const bundle = {
+    openapi: '3.1.0',
+    info: {title: 'mogumogu API', version: '1.0.0'},
+    tags: [],
+    paths: {},
+    components: {},
+  };
+  const seenTags = new Set();
+
+  for (const file of files) {
+    const spec = yaml.load(fs.readFileSync(path.join(specsDir, file), 'utf8'));
+    if (!spec) {
       continue;
     }
-    const [, file, pointer] = match;
-    const resource = loadResource(file);
-    root.paths[route] = resolvePointer(resource, pointer);
+
+    for (const tag of spec.tags || []) {
+      if (!seenTags.has(tag.name)) {
+        seenTags.add(tag.name);
+        bundle.tags.push(tag);
+      }
+    }
+    // Pin each domain's servers onto its own paths so domains keep separate
+    // base URLs in the merged doc.
+    const specServers = spec.servers || [];
+    for (const [route, item] of Object.entries(spec.paths || {})) {
+      if (bundle.paths[route]) {
+        console.warn(`[bundle-openapi] ${file}: path ${route} overwrites an earlier spec`);
+      }
+      bundle.paths[route] =
+        specServers.length && !item.servers ? {...item, servers: specServers} : item;
+    }
+    // Every components subsection (schemas, parameters, responses, …) is a
+    // map of named objects, so merge whichever ones the spec actually has.
+    for (const [group, entries] of Object.entries(spec.components || {})) {
+      bundle.components[group] = bundle.components[group] || {};
+      for (const [name, value] of Object.entries(entries)) {
+        if (bundle.components[group][name]) {
+          console.warn(`[bundle-openapi] ${file}: component ${group}/${name} overwrites an earlier spec`);
+        }
+        bundle.components[group][name] = value;
+      }
+    }
   }
 
-  // Merge every resource's component schemas into the root so the inlined
-  // operations' `#/components/schemas/*` refs resolve in the single document.
-  root.components = root.components || {};
-  root.components.schemas = root.components.schemas || {};
-  for (const resource of Object.values(cache)) {
-    Object.assign(root.components.schemas, resource.components?.schemas || {});
-  }
-
-  fs.writeFileSync(outFile, JSON.stringify(root, null, 2));
+  fs.writeFileSync(outFile, JSON.stringify(bundle, null, 2));
 };

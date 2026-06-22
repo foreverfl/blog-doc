@@ -13,7 +13,7 @@
 # Scalar bundle copied from node_modules at build time (see scripts/copy-scalar.js)
 /static/api/scalar.js
 
-# Bundled OpenAPI doc generated from the split sources (see scripts/bundle-openapi.js)
+# Bundled OpenAPI doc generated from the blog-v2 source specs (see scripts/bundle-openapi.js)
 /static/openapi/openapi.bundle.json
 
 # Misc
