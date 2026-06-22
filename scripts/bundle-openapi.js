@@ -19,16 +19,27 @@ const defaultSrc = path.join(
 const specsDir = process.env.OPENAPI_SPECS_SRC || defaultSrc;
 const outFile = path.join(__dirname, '..', 'static/openapi/openapi.bundle.json');
 
+// Collect every *.yaml under dir, recursing into per-service subfolders.
+function collectSpecFiles(dir) {
+  const found = [];
+  for (const entry of fs.readdirSync(dir, {withFileTypes: true})) {
+    const full = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      found.push(...collectSpecFiles(full));
+    } else if (entry.name.endsWith('.yaml') || entry.name.endsWith('.yml')) {
+      found.push(full);
+    }
+  }
+  return found;
+}
+
 module.exports = function bundleOpenapi() {
   if (!fs.existsSync(specsDir)) {
     // Source specs not present (e.g. blog-v2 not checked out as a sibling).
     // Leave any previously generated bundle in place.
     return;
   }
-  const files = fs
-    .readdirSync(specsDir)
-    .filter((file) => file.endsWith('.yaml') || file.endsWith('.yml'))
-    .sort();
+  const files = collectSpecFiles(specsDir).sort();
   if (files.length === 0) {
     return;
   }
@@ -43,10 +54,11 @@ module.exports = function bundleOpenapi() {
   const seenTags = new Set();
 
   for (const file of files) {
-    const spec = yaml.load(fs.readFileSync(path.join(specsDir, file), 'utf8'));
+    const spec = yaml.load(fs.readFileSync(file, 'utf8'));
     if (!spec) {
       continue;
     }
+    const label = path.relative(specsDir, file);
 
     for (const tag of spec.tags || []) {
       if (!seenTags.has(tag.name)) {
@@ -59,7 +71,7 @@ module.exports = function bundleOpenapi() {
     const specServers = spec.servers || [];
     for (const [route, item] of Object.entries(spec.paths || {})) {
       if (bundle.paths[route]) {
-        console.warn(`[bundle-openapi] ${file}: path ${route} overwrites an earlier spec`);
+        console.warn(`[bundle-openapi] ${label}: path ${route} overwrites an earlier spec`);
       }
       bundle.paths[route] =
         specServers.length && !item.servers ? {...item, servers: specServers} : item;
@@ -70,7 +82,7 @@ module.exports = function bundleOpenapi() {
       bundle.components[group] = bundle.components[group] || {};
       for (const [name, value] of Object.entries(entries)) {
         if (bundle.components[group][name]) {
-          console.warn(`[bundle-openapi] ${file}: component ${group}/${name} overwrites an earlier spec`);
+          console.warn(`[bundle-openapi] ${label}: component ${group}/${name} overwrites an earlier spec`);
         }
         bundle.components[group][name] = value;
       }
